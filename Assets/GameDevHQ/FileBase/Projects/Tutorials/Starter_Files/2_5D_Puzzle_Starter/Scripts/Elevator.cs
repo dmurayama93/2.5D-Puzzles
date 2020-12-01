@@ -15,9 +15,27 @@ public class Elevator : MonoBehaviour
         {
             _curTarget = PointB;
         }
+        else if (transform.position == PointB.position)
+        {
+            _curTarget = PointA;
+        }
     }
     private void FixedUpdate()
     {
         transform.position = Vector3.MoveTowards(transform.position, _curTarget.position, _speed * Time.deltaTime);
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            other.transform.parent = this.transform;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            other.transform.parent = null;
+        }
     }
 }
